@@ -14,3 +14,10 @@ class CustomException(Exception):
 
     def __str__(self):
         return self.error_message
+    
+
+def main():
+    try:
+        a = 1/0
+    except Exception as e:
+        raise CustomException(e, sys)
