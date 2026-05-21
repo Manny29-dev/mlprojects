@@ -1,7 +1,7 @@
 import sys
 
 def error_message_details(error, error_details:sys):
-    _, _, exc.tb = error_details.exc_info()
+    _, _, exc = error_details.exc_info()
     filename = exc.tb_frame.f_code.co_filename
     line_number = exc.tb_lineno
     error_message = f"Error occurred in script: [{filename}] at line number: [{line_number}] with error message: [{str(error)}]"
