@@ -1,25 +1,19 @@
-from copyreg import pickle
 import os
 import sys
-import numpy as np
-import pandas as pd
 import pickle
 import dill
 
-import os
-import sys
-import pickle
-
 from src.exception import CustomException
 
-def save_object(file_path,obj):
+
+def save_object(file_path, obj):
     try:
-        dir_path = os.path.dirname(file_path)
+        dir_path = os.path.dirname(os.path.abspath(file_path))
+        os.makedirs(dir_path, exist_ok=True)
 
-        os.makedirs(dir_path,exist_ok=True)
-
-        with open(file_path,"wb") as file_obj:
-            pickle.dump(obj,file_obj)
+        # Use dill for more robust serialization of complex objects
+        with open(file_path, "wb") as file_obj:
+            dill.dump(obj, file_obj)
 
     except Exception as e:
-        raise CustomException(e,sys)    
+        raise CustomException(e, sys)
