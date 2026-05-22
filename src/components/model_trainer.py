@@ -50,7 +50,45 @@ class ModelTrainer:
                 "catboost":CatBoostRegressor(verbose=False),
             }
 
-            model_report:dict=evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models)
+            params={
+
+                "Decision Tree": {
+                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    #'splitter': ['best', 'random'],
+                    #'max_features': ['sqrt', 'log2', None]
+                },
+                'Random foreest': {
+                    #cititerion: ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    #'max_features': ['sqrt', 'log2', None]
+                },
+                'Gradient Boost': {
+                    'learning_rate': [0.1, 0.01, 0.05, 0.001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    #'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    #'max_features': ['sqrt', 'log2', None],
+
+                },
+                'Linear Regression': {},
+                'K-Nearest classifier': {
+                    'n_neighbors': [5, 7, 9, 11],
+                    #'weights': ['uniform', 'distance'],
+                    #'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute']
+                },
+                'xgboos': {
+                    'learning_rate': [0.1, 0.01, 0.05, 0.001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+                'catboost': {
+                    'learning_rate': [0.1, 0.01, 0.05, 0.001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256],
+                    'depth': [6, 8, 10]
+                }
+
+            }   
+
+
+            model_report:dict=evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,models=models,params=params)
 
             # To get best model score from dict
             best_model_score = max(sorted(model_report.values()))
